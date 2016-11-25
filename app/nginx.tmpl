@@ -18,10 +18,8 @@
 server {
 	server_name _;
 	listen 80;
-	access_log /var/log/nginx/access.log vhost;
     location /nginx_status {
            stub_status on;
-           access_log on;
     }
 	return 400;
 }
@@ -30,7 +28,6 @@ server {
 server {
 	server_name _; # This is just an invalid value which will never trigger on a real hostname.
 	listen 443 ssl http2;
-	access_log /var/log/nginx/access.log vhost;
 	ssl_certificate /etc/nginx/certs/default.crt;
 	ssl_certificate_key /etc/nginx/certs/default.key;
 	return 400;
@@ -93,7 +90,6 @@ upstream {{ $host }} {
 server {
 	server_name {{ $host }};
 	listen 80 {{ $default_server }};
-	access_log /var/log/nginx/access.log vhost;
 	return 301 https://$host$request_uri;
 }
 {{ end }}
@@ -101,7 +97,6 @@ server {
 server {
 	server_name {{ $host }};
 	listen 443 ssl http2 {{ $default_server }};
-	access_log /var/log/nginx/access.log vhost;
 
 	ssl_certificate /etc/nginx/certs/{{ (printf "%s.crt" $cert) }};
 	ssl_certificate_key /etc/nginx/certs/{{ (printf "%s.key" $cert) }};
@@ -148,7 +143,6 @@ server {
 server {
 	server_name {{ $host }};
 	listen 80 {{ $default_server }};
-	access_log /var/log/nginx/access.log vhost;
 
 	{{ if (exists (printf "/etc/nginx/vhost.d/%s" $host)) }}
     	include {{ printf "/etc/nginx/vhost.d/%s" $host }};
@@ -181,7 +175,6 @@ server {
 server {
 	server_name {{ $host }};
 	listen 443 ssl http2 {{ $default_server }};
-	access_log /var/log/nginx/access.log vhost;
 	ssl_certificate /etc/nginx/certs/default.crt;
 	ssl_certificate_key /etc/nginx/certs/default.key;
 	return 400;

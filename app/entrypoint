@@ -19,8 +19,8 @@ if [ $1 = supervisord ]; then
     # if the socket doesn't exist, fail
     [ "$socketMissing" = 1 ] && exit 1
     # Force regenerator default.conf on startup
-    conf=/etc/nginx/conf.d/default.conf
-    [ -f $conf ] && rm -v $conf
+    _conf=/etc/nginx/conf.d/default.conf
+    [ -f $_conf ] && rm -v $_conf
 fi
 
 exec "$@"
