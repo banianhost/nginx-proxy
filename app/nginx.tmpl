@@ -24,6 +24,7 @@
 server {
 	server_name _;
 	listen 80;
+    access_log off;
     location /_nginx_status_ {
            stub_status on;
     }
