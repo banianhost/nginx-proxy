@@ -1,4 +1,3 @@
-# Docker nginx-proxy
 ![License MIT](https://img.shields.io/badge/license-MIT-blue.svg)
 
 nginx-proxy sets up a container running nginx and [docker-gen][1].
@@ -78,7 +77,7 @@ In this example, the `my-nginx-proxy` container will be connected to `my-network
 
 ### SSL Backends
 
-If you would like to connect to your backend using HTTPS instead of HTTP, set `VIRTUAL_PROTO=https` on the backend container.
+If you would like the reverse proxy to connect to your backend using HTTPS instead of HTTP, set `VIRTUAL_PROTO=https` on the backend container.
 
 ### uWSGI Backends
 
@@ -127,6 +126,9 @@ $ docker run --volumes-from nginx \
 Finally, start your containers with `VIRTUAL_HOST` environment variables.
 
     $ docker run -e VIRTUAL_HOST=foo.bar.com  ...
+### SSL Support using letsencrypt
+
+[letsencrypt-nginx-proxy-companion](https://github.com/JrCs/docker-letsencrypt-nginx-proxy-companion)is a lightweight companion container for the nginx-proxy. It allow the creation/renewal of Let's Encrypt certificates automatically. 
 
 ### SSL Support
 
@@ -141,6 +143,10 @@ The contents of `/path/to/certs` should contain the certificates and private key
 hosts in use.  The certificate and keys should be named after the virtual host with a `.crt` and
 `.key` extension.  For example, a container with `VIRTUAL_HOST=foo.bar.com` should have a
 `foo.bar.com.crt` and `foo.bar.com.key` file in the certs directory.
+
+If you are running the container in a virtualized environment (Hyper-V, VirtualBox, etc...),
+/path/to/certs must exist in that environment or be made accessible to that environment.
+By default, Docker is not able to mount directories on the host machine to containers running in a virtual machine.
 
 #### Diffie-Hellman Groups
 
@@ -221,6 +227,7 @@ proxy_set_header Connection $proxy_connection;
 proxy_set_header X-Real-IP $remote_addr;
 proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 proxy_set_header X-Forwarded-Proto $proxy_x_forwarded_proto;
+proxy_set_header X-Forwarded-Port $proxy_x_forwarded_port;
 
 # Mitigate httpoxy attack (see README for details)
 proxy_set_header Proxy "";
