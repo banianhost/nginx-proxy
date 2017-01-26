@@ -73,13 +73,14 @@ upstream {{ $host }} {
 {{ range $container := $containers }}
     {{/* Check if upstream defined */}}
     {{ if $container.Env.VIRTUAL_UPSTREAM }}
+       ## Using custom upstream 
        server {{$container.Env.VIRTUAL_UPSTREAM}}; 
     {{ else }}
 	{{ $addrLen := len $container.Addresses }}
 	{{ range $knownNetwork := $CurrentContainer.Networks }}
 		{{ range $containerNetwork := $container.Networks }}
 			{{ if eq $knownNetwork.Name $containerNetwork.Name }}
-			## Can be connect with "{{ $containerNetwork.Name }}" network
+			    ## Using network "{{ $containerNetwork.Name }}"
 				{{/* If only 1 port exposed, use that */}}
 				{{ if eq $addrLen 1 }}
 					{{ $address := index $container.Addresses 0 }}
