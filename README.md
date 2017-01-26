@@ -12,5 +12,5 @@ Please see [upstream docs](https://github.com/jwilder/nginx-proxy) for more info
 - ...
 
 ## `VIRTUAL_UPSTREAM`
-This Env variable can be added so that you can define your custom backends. (it should be full url like `http://my_app`)  
+This Env variable can be added so that you can define your custom backends.
 This is very useful specially when we are using nginx-proxy in a swarm cluster.
