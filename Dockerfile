@@ -25,4 +25,5 @@ RUN wget https://github.com/jwilder/docker-gen/releases/download/$DOCKER_GEN_VER
 # Default domain
 RUN echo "Domain does not exist." > /usr/share/nginx/html/index.html
 
+COPY /app/nginx.conf /etc/nginx/nginx.conf
 COPY app /app/
