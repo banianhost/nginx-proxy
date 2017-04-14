@@ -79,8 +79,8 @@ upstream {{ $upstream_name }} {
 {{/* Get the VIRTUAL_PROTO defined by containers w/ the same vhost, falling back to "http" */}}
 {{ $proto := or (first (groupByKeys $containers "Env.VIRTUAL_PROTO")) "http" }}
 
-{{/* Get the HTTPS_METHOD defined by containers w/ the same vhost, falling back to "redirect" */}}
-{{ $https_method := or (first (groupByKeys $containers "Env.HTTPS_METHOD")) "redirect" }}
+{{/* Get the HTTPS_METHOD defined by containers w/ the same vhost, falling back to "noredirect" */}}
+{{ $https_method := or (first (groupByKeys $containers "Env.HTTPS_METHOD")) "noredirect" }}
 
 {{/* Get the first cert name defined by containers w/ the same vhost */}}
 {{ $certName := (first (groupByKeys $containers "Env.CERT_NAME")) }}
